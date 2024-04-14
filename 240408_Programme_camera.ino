@@ -1,7 +1,7 @@
 /*****************************************Caméra*****************************************
  Kanema Oswin 6ème Electronique
- Hardware: M5Stack-Timer-CAM; visionnage + PCA9685; i2c (pwm)  + PCF8574
- 24/03/2024
+ Hardware: M5Stack-Timer-CAM; visionnage + PCA9685; i2c (pwm)  + PCF8574 entrées/sorties supplémentaire
+
 *****************************************librairies**************************************/
 
 #include "esp_camera.h"
@@ -13,15 +13,14 @@
 #define CAMERA_MODEL_M5STACK_UNITCAM  // ne peut être deplacé
 #include "camera_pins.h"
 
-
-//#define test_mouvement
-
 /*****************************************Constante**************************************/
 //#define CAMERA_MODEL_M5STACK_UNITCAM
 #define P0 0
 #define P1 1
 #define MAX_VALUE 480
 #define MIN_VALUE 80
+#define MIN_ANGLE 0  // Angle minimum (en degrés)
+#define MAX_ANGLE 180
 PCF8575 pcf8575(0x20);
 
 /*****************************************Variable**************************************/
@@ -55,7 +54,7 @@ void setup() {
   pcf8575.pinMode(P0, INPUT);
   pcf8575.pinMode(P1, INPUT);
   pcf8575.begin();
-  if (faboPWM.begin()) {                  // vérification 
+  if (faboPWM.begin()) {  // vérification
     Serial.println("Find PCA9685");
     faboPWM.init(300);
   }
@@ -162,29 +161,47 @@ void setup() {
 }
 /*****************************************Boucle**************************************/
 void loop() {
-
   faboPWM.set_channel_value(2, 1500);  // led U11
-  delay(200);
   faboPWM.set_channel_value(3, 4095);  // infra.led  U13
+  faboPWM.set_channel_value(4, 4095);  // infra.led  U15
 
-  uint8_t val1 = pcf8575.digitalRead(P1);  //P1=U5           P0=U4
-  if (val1 == 1) {
-    Serial.println("HUMAIN");
-    int angle = 90;
-    int pulseWidth = map(angle, 0, 180, MIN_VALUE, MAX_VALUE);
+  uint8_t val2 = pcf8575.digitalRead(P0);  // P0=U4
+  uint8_t val1 = pcf8575.digitalRead(P1);  // P1=U5
+
+  if (val1 == 1 && val2 == 0) {
+    Serial.println("HUMAIN (val1)");
+    int angle = 33;  
+    int pulseWidth = calcul_signal(angle);
     faboPWM.set_channel_value(1, pulseWidth);  // U9
-    faboPWM.set_channel_value(0, pulseWidth);  // U8
-  } else if (val1 == 0) {
+    faboPWM.set_channel_value(0, pulseWidth);  // U8 (à supprimer plus tard)
+  } else if (val2 == 1 && val1 == 0) {
+    Serial.println("HUMAIN (val2)");
+    int angle = 123; 
+    int pulseWidth = calcul_signal(angle);
+    faboPWM.set_channel_value(1, pulseWidth);  // U9
+    faboPWM.set_channel_value(0, pulseWidth);  // U8 (à supprimer plus tard)
+  } else if (val1 == 1 && val2 == 1) {
+    Serial.println("HUMAIN (val1 et val2)");
+    int angle = 90;  
+    int pulseWidth = calcul_signal(angle);
+    faboPWM.set_channel_value(1, pulseWidth);  // U9
+    faboPWM.set_channel_value(0, pulseWidth);  // U8 (à supprimer plus tard)
+  } else {
     Serial.println("RIEN");
-    int angle = 0;
-    int pulseWidth = map(angle, 0, 180, MIN_VALUE, MAX_VALUE);
-    faboPWM.set_channel_value(1, pulseWidth);  // U9
-    faboPWM.set_channel_value(0, pulseWidth);  // U8
+    for (int angle = 0; angle <= 180; angle++) {
+      int pulseWidth = calcul_signal(angle);
+      faboPWM.set_channel_value(1, pulseWidth);  // U9
+      delay(10);
+    }
+    for (int angle = 180; angle >= 0; angle--) {
+      int pulseWidth = calcul_signal(angle);
+      faboPWM.set_channel_value(1, pulseWidth);  // U9  
+      delay(10);                                    
+    }
   }
-
-
 }
-void detection(void){
-  // salut 
 
+int calcul_signal(int angle) {
+  return (angle * (MAX_VALUE - MIN_VALUE) / MAX_ANGLE) + MIN_VALUE;  // Calcul de la largeur d'impulsion PWM en utilisant une équation simplifiée
 }
+
