@@ -1,7 +1,9 @@
 /*****************************************Caméra*****************************************
- Kanema Oswin 6ème Electronique
- Hardware: M5Stack-Timer-CAM; visionnage + PCA9685; i2c (pwm)  + PCF8574 entrées/sorties supplémentaire
-
+ Caméra connectée
+ Kanema Oswin 
+ 6ème Electronique Inraci (Institut national de radioélectricité et cinématographie)
+ Hardware: M5Stack-Timer-CAM; visionnage + PCA9685; i2c (pwm) entrées/sorties supplémentaire + PCF8574 entrées/sorties supplémentaire + servomoteur mg996r
+ 
 *****************************************librairies**************************************/
 
 #include "esp_camera.h"
@@ -19,8 +21,8 @@
 #define P1 1
 #define MAX_VALUE 480
 #define MIN_VALUE 80
-#define MIN_ANGLE 0  // Angle minimum (en degrés)
-#define MAX_ANGLE 180
+#define MIN_ANGLE 0    // Angle minimum (en degrés)
+#define MAX_ANGLE 180  // Angle maximum (en degrés)
 PCF8575 pcf8575(0x20);
 
 /*****************************************Variable**************************************/
@@ -38,6 +40,8 @@ const char* password = "0123456789";
 //const char* password = "6qp7W7n2FEtT";
 //const char *ssid     = "iPhone de Oswin";
 //const char *password = "Dragon200";
+int angle_actuel = 90;
+int pulseWidth;
 
 /*****************************************Fonctions***************************************/
 void setupLedFlash(int pin);
@@ -45,6 +49,10 @@ void startCameraServer();
 void IRAM_ATTR onTimer(void* param) {
   static int cpt = 0;
 }
+int calcul_signal(int angle) {
+  return (angle * (MAX_VALUE - MIN_VALUE) / MAX_ANGLE) + MIN_VALUE;  // Calcul de la largeur d'impulsion PWM
+}
+
 /*****************************************Intialisation***********************************/
 void setup() {
   Wire.begin();
@@ -152,56 +160,60 @@ void setup() {
   Serial.print("Camera Ready! Use 'http://");
   Serial.print(WiFi.localIP());
   Serial.println("' to connect");
+  int angle = 0;
+  int pulseWidth = calcul_signal(angle);
+  faboPWM.set_channel_value(0, pulseWidth);  // servomoteur axe Y(haut/bas)
+  int ServoX = 90;
+  int PWM = calcul_signal(ServoX);
+  faboPWM.set_channel_value(1, PWM);  //servomoteur axe X (gauche/droite)
 
-  int angle = 90;
-  int pulseWidth = map(angle, 0, 180, MIN_VALUE, MAX_VALUE);  // Convertir l'angle en largeur d'impulsion
-  faboPWM.set_channel_value(1, pulseWidth);                   //U9
-  faboPWM.set_channel_value(0, pulseWidth);                   //U8
-  delay(0);
+  faboPWM.set_channel_value(1, calcul_signal(angle_actuel));
 }
 /*****************************************Boucle**************************************/
 void loop() {
-  faboPWM.set_channel_value(2, 1500);  // led U11
-  faboPWM.set_channel_value(3, 4095);  // infra.led  U13
-  faboPWM.set_channel_value(4, 4095);  // infra.led  U15
+  faboPWM.set_channel_value(2, 1500);          // led U11
+  faboPWM.set_channel_value(3, 4095);          // infra.led  U13
+  faboPWM.set_channel_value(4, 4095);          // infra.led  U15
+  uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4  capteur infrarouge droite
+  uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5  capteur infrarouge gauche
 
-  uint8_t val2 = pcf8575.digitalRead(P0);  // P0=U4
-  uint8_t val1 = pcf8575.digitalRead(P1);  // P1=U5
-
-  if (val1 == 1 && val2 == 0) {
-    Serial.println("HUMAIN (val1)");
-    int angle = 33;  
-    int pulseWidth = calcul_signal(angle);
-    faboPWM.set_channel_value(1, pulseWidth);  // U9
-    faboPWM.set_channel_value(0, pulseWidth);  // U8 (à supprimer plus tard)
-  } else if (val2 == 1 && val1 == 0) {
-    Serial.println("HUMAIN (val2)");
-    int angle = 123; 
-    int pulseWidth = calcul_signal(angle);
-    faboPWM.set_channel_value(1, pulseWidth);  // U9
-    faboPWM.set_channel_value(0, pulseWidth);  // U8 (à supprimer plus tard)
-  } else if (val1 == 1 && val2 == 1) {
-    Serial.println("HUMAIN (val1 et val2)");
-    int angle = 90;  
-    int pulseWidth = calcul_signal(angle);
-    faboPWM.set_channel_value(1, pulseWidth);  // U9
-    faboPWM.set_channel_value(0, pulseWidth);  // U8 (à supprimer plus tard)
-  } else {
-    Serial.println("RIEN");
-    for (int angle = 0; angle <= 180; angle++) {
-      int pulseWidth = calcul_signal(angle);
-      faboPWM.set_channel_value(1, pulseWidth);  // U9
-      delay(10);
+  Serial.print(CapteurG);
+  Serial.print("     ");
+  Serial.println(CapteurD);
+  delay(300);
+/*
+  if (CapteurD == 1) {
+    Serial.println("HUMAIN a droite");
+    for (int angle = angle_actuel; angle >= 33; angle--) {
+      faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur
+      delay(80);
     }
-    for (int angle = 180; angle >= 0; angle--) {
-      int pulseWidth = calcul_signal(angle);
-      faboPWM.set_channel_value(1, pulseWidth);  // U9  
-      delay(10);                                    
-    }
+    angle_actuel = 33;
   }
-}
 
-int calcul_signal(int angle) {
-  return (angle * (MAX_VALUE - MIN_VALUE) / MAX_ANGLE) + MIN_VALUE;  // Calcul de la largeur d'impulsion PWM en utilisant une équation simplifiée
-}
+  if (CapteurG == 1) {
+    Serial.println("HUMAIN a gauche");
+    for (int angle = angle_actuel; angle <= 123; angle++) {
+      faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur
+      delay(80);
+    }
+    angle_actuel = 123;
+  }
 
+  /* 
+  } else if (CapteurG == 1) {
+    Serial.println("HUMAIN a gauche");
+    for (int angle = angle_actuel; angle >= 123; angle--) {
+      pulseWidth = calcul_signal(angle);
+      faboPWM.set_channel_value(1, pulseWidth);  // U9 servomoteur
+      delay(80);
+    }
+    angle_actuel = 123;
+    faboPWM.set_channel_value(1, pulseWidth);  // <U9
+  } else if (CapteurG == 1 && CapteurD == 1) {
+    Serial.println("HUMAIN champs de vision");
+    int angle = 90;
+    int pulseWidth = calcul_signal(angle);
+    faboPWM.set_channel_value(1, pulseWidth);  // U9
+  }*/
+}
