@@ -181,7 +181,7 @@ void loop() {
   Serial.print("     ");
   Serial.println(CapteurD);
   delay(300);
-/*
+
   if (CapteurD == 1) {
     Serial.println("HUMAIN a droite");
     for (int angle = angle_actuel; angle >= 33; angle--) {
@@ -200,20 +200,4 @@ void loop() {
     angle_actuel = 123;
   }
 
-  /* 
-  } else if (CapteurG == 1) {
-    Serial.println("HUMAIN a gauche");
-    for (int angle = angle_actuel; angle >= 123; angle--) {
-      pulseWidth = calcul_signal(angle);
-      faboPWM.set_channel_value(1, pulseWidth);  // U9 servomoteur
-      delay(80);
-    }
-    angle_actuel = 123;
-    faboPWM.set_channel_value(1, pulseWidth);  // <U9
-  } else if (CapteurG == 1 && CapteurD == 1) {
-    Serial.println("HUMAIN champs de vision");
-    int angle = 90;
-    int pulseWidth = calcul_signal(angle);
-    faboPWM.set_channel_value(1, pulseWidth);  // U9
-  }*/
 }
