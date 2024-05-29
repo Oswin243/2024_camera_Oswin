@@ -176,12 +176,12 @@ void loop() {
   faboPWM.set_channel_value(4, 4095);          // infra.led  U15
   uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4  capteur infrarouge droite
   uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5  capteur infrarouge gauche
-
+/*
   Serial.print(CapteurG);
   Serial.print("     ");
   Serial.println(CapteurD);
   delay(300);
-
+*/
   if (CapteurD == 1) {
     Serial.println("HUMAIN a droite");
     for (int angle = angle_actuel; angle >= 33; angle--) {
@@ -199,5 +199,4 @@ void loop() {
     }
     angle_actuel = 123;
   }
-
 }
