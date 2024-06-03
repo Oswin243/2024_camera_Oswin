@@ -12,7 +12,7 @@
 //#define CAMERA_MODEL_M5STACK_UNITCAM
 #define P0 0
 #define P1 1
-#define MAX_VALUE 480
+#define MAX_VALUE 480     
 #define MIN_VALUE 80
 #define MIN_ANGLE 0    // Angle minimum (en degrés)
 #define MAX_ANGLE 180  // Angle maximum (en degrés)
@@ -22,7 +22,7 @@ extern const char* ssid;
 extern const char* password;
 
 
-//#define LABO
+#define Chambre
 
 extern PCF8575 pcf8575;
 extern FaBoPWM faboPWM;

@@ -1,31 +1,30 @@
 #include "2024_camera_Oswin.h"
 
-#define GOAT
 
 
 #ifdef GOAT
- const char* ssid = "KAIROS";
- const char* password = "0487371190";
+const char* ssid = "KAIROS";
+const char* password = "0487371190";
 #endif
 
 #ifdef Inraci
-  const char* ssid = "INRACI_4G";
-  const char* password = "Students-INRaCi";
+const char* ssid = "INRACI_4G";
+const char* password = "Students-INRaCi";
 #endif
 
 #ifdef LABO
-  const char* ssid = "#LaboD5";  //ok
-  const char* password = "0123456789";
+const char* ssid = "#LaboD5";  //ok
+const char* password = "0123456789";
 #endif
 
 #ifdef Chambre
-  const char* ssid = "Wifi1";
-  const char* password = "6qp7W7n2FEtT";
+const char* ssid = "Proximus 2,4 GHz";
+const char* password = "6qp7W7n2FEtT";
 #endif
 
 #ifdef M_WIFI
-  const char* ssid = "iPhone de Oswin";
-  const char* password = "Dragon200";
+const char* ssid = "iPhone de Oswin";
+const char* password = "Dragon200";
 #endif
 
 /*****************************************Objet**************************************/
@@ -36,40 +35,39 @@ FaBoPWM faboPWM;
 
 
 
-void init_PCF8575(void) 
-{
+void init_PCF8575(void) {
   pcf8575.pinMode(P0, INPUT);
   pcf8575.pinMode(P1, INPUT);
-  pcf8575.begin();
-}
-
-void init_PCA9685(void) 
-{
-  if (faboPWM.begin()) {  // vérification
-    Serial.println("Find PCA9685");
-    faboPWM.init(300);
+  if (pcf8575.begin()) {
+    Serial.println("PCF8574 trouver");
+  } else {
+    Serial.println("PCF8574 n'est pas trouver");
   }
-  faboPWM.set_hz(50);
 }
 
-int calcul_signal(int angle) 
-{
-  return (angle * (MAX_VALUE - MIN_VALUE) / MAX_ANGLE) + MIN_VALUE;  // Calcul de la largeur d'impulsion PWM
+void init_PCA9685(void) {
+  if (faboPWM.begin()) {  // vérification
+    Serial.println(" PCA9685 trouver");
+    faboPWM.init(300);
+  } else {
+    Serial.println("PCA9685 n'est pas trouver");
+  }
 }
 
-void IRAM_ATTR onTimer(void* param) 
-{
+int calcul_signal(int angle) {
+  return (angle * (MAX_VALUE - MIN_VALUE) / MAX_ANGLE) + MIN_VALUE;  // Calcul, convertie les valeurs d’angles en impulsions de largeur
+}
+
+void IRAM_ATTR onTimer(void* param) {
   static int cpt = 0;
 }
 
-void Allumage_LED(void) 
-{
+void Allumage_LED(void) {
   faboPWM.set_channel_value(2, 1500);  // led U11
   faboPWM.set_channel_value(3, 4095);  // infra.led  U13
   faboPWM.set_channel_value(4, 4095);  // infra.led  U15
 }
-void init_Position(void) 
-{
+void init_Position(void) {
   int angle = 0;
   int pulseWidth = calcul_signal(angle);
   faboPWM.set_channel_value(0, pulseWidth);  // servomoteur axe Y(haut/bas)
@@ -80,8 +78,7 @@ void init_Position(void)
   faboPWM.set_channel_value(1, calcul_signal(90));
 }
 
-void init_Camera(void) 
-{
+void init_Camera(void) {
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -159,6 +156,9 @@ void init_Camera(void)
   setupLedFlash(LED_GPIO_NUM);
 #endif
 
+  Serial.print("Attends la connexion à : ");
+  Serial.println(ssid);
+
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);
 
@@ -167,12 +167,11 @@ void init_Camera(void)
     Serial.print(".");
   }
   Serial.println("");
-  Serial.println("WiFi connected");
+  Serial.println("WiFi connecter");
 
   startCameraServer();
 
-  Serial.print("Camera Ready! Use 'http://");
+  Serial.print("Caméra prêt! Ustiliser 'http://");
   Serial.print(WiFi.localIP());
-  Serial.println("' to connect");
+  Serial.println("' pour se connecter");
 }
-
