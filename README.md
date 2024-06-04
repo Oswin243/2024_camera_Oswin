@@ -2,10 +2,10 @@
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/ee703e5f-3518-406a-b32f-7055061311c4) [lien EasyEDA](https://oshwlab.com/oswin03/sch-ma-cam-ra) 
 
 - [Introduction](#introduction)
-- [Le schéma bloc](#schéma-bloc) 
+- [Le schéma bloc](#Le-schéma-bloc) 
 - [Les caractéristiques](#Les-caractéristiques)
-  - [Schéma de principe de la caméra](#schéma-de-principe-de-la-caméra)
-  - [Schéma de principe du PCB](#Schéma-de-principe-du-PCB)
+- [Le schéma de principe de la caméra](#Le-schéma-de-principe-de-la-caméra)
+  - [Le routage et sérigraphie du PCB](#Le-routage-et-sérigraphie-du-PCB)
 - [Bibliothèques nécessaires](#bibliothèques-nécessaires)  
 - [Partie électrique](#partie-mécanique)
    - [Schéma de principe de la caméra](#schéma-de-principe-de-la-caméra)
@@ -74,14 +74,21 @@ Caractéristique mécanique
 •	Matériau : PLA (acide polylactique) 
 
 
-## Schéma de principe de la caméra
+## Le schéma de principe de la caméra
 
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/22fe538d-27cd-4880-be23-c74240a38d34)
 
 M5stack timer-caméra/ Transistor BS170 /Servomoteur MG996r/ PCF8574/ PCA9685
 
 
-##
+## Le routage et sérigraphie du PCB
+
+![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/7ec2256c-1516-42ba-8925-051054e7fa40)   ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/172b47bf-f02c-4a56-b8aa-73f446364606)
+
+60 mm x 60 mm
+
+
+
 
 
 
