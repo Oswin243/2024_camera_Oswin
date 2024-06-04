@@ -84,6 +84,8 @@ M5stack timer-caméra/ Transistor BS170 /Servomoteur MG996r/ PCF8574/ PCA9685
 
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/7ec2256c-1516-42ba-8925-051054e7fa40)   ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/172b47bf-f02c-4a56-b8aa-73f446364606)
 
+[Lien du schéma vers EasyEDA](https://oshwlab.com/oswin03/sch-ma-cam-ra) 
+
 60 mm x 60 mm
 
 ## Bibliothèques nécessaires 
