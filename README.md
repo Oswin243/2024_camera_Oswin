@@ -78,7 +78,7 @@ Caractéristique mécanique
 
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/22fe538d-27cd-4880-be23-c74240a38d34)
 
-M5stack timer-caméra/ Transistor BS170 /Servomoteur MG996r
+M5stack timer-caméra/ Transistor BS170 /Servomoteur MG996r/ PCF8574/ PCA9685
 
 
 ##
