@@ -1,16 +1,15 @@
 # 2024_camera_Oswin
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/ee703e5f-3518-406a-b32f-7055061311c4) [lien EasyEDA](https://oshwlab.com/oswin03/sch-ma-cam-ra) 
 
-- [Introduction](#introduction)
+- [Introduction](#Introduction)
 - [Le schéma bloc](#Le-schéma-bloc) 
 - [Les caractéristiques](#Les-caractéristiques)
 - [Le schéma de principe de la caméra](#Le-schéma-de-principe-de-la-caméra)
   - [Le routage et sérigraphie du PCB](#Le-routage-et-sérigraphie-du-PCB)
-- [Bibliothèques nécessaires](#bibliothèques-nécessaires)  
-- [Partie électrique](#partie-mécanique)
-   - [Schéma de principe de la caméra](#schéma-de-principe-de-la-caméra)
-   - [Schéma de principe du PCB](#schéma-de-principe-du-PCB)
-   - [Sérigraphie du PCB](#Sérigraphie-du-PCB)
+- [Bibliothèques nécessaires](#Bibliothèques-nécessaires)  
+- [Partie mécanique](#Partie-mécanique)
+- 
+
 
 
 ## Introduction
@@ -86,6 +85,17 @@ M5stack timer-caméra/ Transistor BS170 /Servomoteur MG996r/ PCF8574/ PCA9685
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/7ec2256c-1516-42ba-8925-051054e7fa40)   ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/172b47bf-f02c-4a56-b8aa-73f446364606)
 
 60 mm x 60 mm
+
+## Bibliothèques nécessaires 
+
+Bibliothèques nécessaires pour intégrer les cartes : 
+https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json ,   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json 
+
+## Partie mécanique
+
+![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/6ecee9cc-4031-4a01-9e86-9090dd8af188)
+![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/1d2abec6-7861-4c47-b956-27963fa86319)
+![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/fec9397c-c882-4702-96ce-81da2da3684b)
 
 
 
