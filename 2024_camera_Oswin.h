@@ -22,7 +22,7 @@ extern const char* ssid;
 extern const char* password;
 
 
-#define Chambre
+#define LABO
 
 extern PCF8575 pcf8575;
 extern FaBoPWM faboPWM;
@@ -32,6 +32,8 @@ void Allumage_LED(void);
 void init_Camera(void);
 void init_PCA9685(void);
 void init_PCF8575(void);
+void configuration_servomoteur(void);
+void verification_PCF8574(void);
 void setupLedFlash(int pin);
 void startCameraServer();   
 int calcul_signal(int angle); 

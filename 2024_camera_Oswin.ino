@@ -12,6 +12,15 @@ esp_timer_handle_t timer;
 unsigned long timeElapsed;
 int angle_actuel = 90;
 int pulseWidth;
+
+
+//#define Test_servomoteur
+//#define Test_PCF8574
+
+#define Projet_la_camera_connectee
+
+
+
 /*****************************************Intialisation***********************************/
 void setup() {
   Wire.begin();
@@ -26,7 +35,8 @@ void setup() {
 }
 /*****************************************Boucle**************************************/
 void loop() {
-  
+
+#ifdef Projet_La_camera_connectee
   uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4  capteur infrarouge droite
   uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5  capteur infrarouge gauche
   if (CapteurD == 1) {
@@ -45,4 +55,27 @@ void loop() {
     }
     angle_actuel = 123;
   }
+#endif
+
+#ifdef Test_PCF8574
+  uint8_t etat = pcf8575.digitalRead(P1); 
+  if (etat == 1) {
+    Serial.println(etat);
+    delay(1000);
+  } else if (etat == 0) {
+    Serial.println(etat);
+  }
+#endif
+
+#ifdef Test_servomoteur
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    int angle = input.toInt();                                  // Angle saisi depuis le moniteur série
+    angle = constrain(angle, 0, 180);                           // Limiter l'angle entre 0 et 180 degrés
+    int pulseWidth = map(angle, 0, 180, MIN_VALUE, MAX_VALUE);  // Convertir l'angle en largeur d'impulsion
+    faboPWM.set_channel_value(0, pulseWidth);
+    Serial.print("Position du servo mise à jour : ");
+    Serial.println(angle);
+  }
+#endif
 }

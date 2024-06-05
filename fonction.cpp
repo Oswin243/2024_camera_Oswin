@@ -1,7 +1,6 @@
 #include "2024_camera_Oswin.h"
 
 
-
 #ifdef GOAT
 const char* ssid = "KAIROS";
 const char* password = "0487371190";
@@ -31,9 +30,6 @@ const char* password = "Dragon200";
 
 PCF8575 pcf8575(0x20);
 FaBoPWM faboPWM;
-
-
-
 
 void init_PCF8575(void) {
   pcf8575.pinMode(P0, INPUT);
