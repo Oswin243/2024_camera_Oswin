@@ -12,7 +12,7 @@ const char* password = "Students-INRaCi";
 #endif
 
 #ifdef LABO
-const char* ssid = "#LaboD5";  //ok
+const char* ssid = "#LaboD5";  
 const char* password = "0123456789";
 #endif
 
@@ -75,8 +75,8 @@ void init_Position(void) {
 }
 
 void init_Camera(void) {
-  camera_config_t config;
-  config.ledc_channel = LEDC_CHANNEL_0;
+  camera_config_t config;                      // paramètre pour configurer la caméra
+  config.ledc_channel = LEDC_CHANNEL_0;        //broche GPIO (General Purpose Input/Output) de l'ESP32
   config.ledc_timer = LEDC_TIMER_0;
   config.pin_d0 = Y2_GPIO_NUM;
   config.pin_d1 = Y3_GPIO_NUM;
@@ -94,8 +94,8 @@ void init_Camera(void) {
   config.pin_sccb_scl = SIOC_GPIO_NUM;
   config.pin_pwdn = PWDN_GPIO_NUM;
   config.pin_reset = RESET_GPIO_NUM;
-  config.xclk_freq_hz = 20000000;
-  config.frame_size = FRAMESIZE_UXGA;
+  config.xclk_freq_hz = 20000000;                 //paramètre de la caméra ov3660
+  config.frame_size = FRAMESIZE_UXGA;       
   config.pixel_format = PIXFORMAT_JPEG;
   config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
   config.fb_location = CAMERA_FB_IN_PSRAM;
@@ -118,7 +118,7 @@ void init_Camera(void) {
 #endif
   }
 
-#if defined(CAMERA_MODEL_ESP_EYE)
+#if defined(CAMERA_MODEL_ESP_EYE)  // pour seulement un autre modele de caméra
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
 #endif
@@ -152,7 +152,7 @@ void init_Camera(void) {
   setupLedFlash(LED_GPIO_NUM);
 #endif
 
-  Serial.print("Attends la connexion à : ");
+  Serial.print("Attends la connexion à : ");   // connexion au WIFI
   Serial.println(ssid);
 
   WiFi.begin(ssid, password);
@@ -165,9 +165,9 @@ void init_Camera(void) {
   Serial.println("");
   Serial.println("WiFi connecter");
 
-  startCameraServer();
+  startCameraServer();                            // serveur de la caméra
 
-  Serial.print("Caméra prêt! Ustiliser 'http://");
+  Serial.print("Caméra prêt! Ustiliser 'http://");  
   Serial.print(WiFi.localIP());
   Serial.println("' pour se connecter");
 }

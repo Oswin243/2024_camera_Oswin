@@ -16,7 +16,6 @@ int pulseWidth;
 
 //#define Test_servomoteur
 //#define Test_PCF8574
-
 #define Projet_la_camera_connectee
 
 
