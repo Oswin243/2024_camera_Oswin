@@ -16,7 +16,7 @@ int pulseWidth;
 
 //#define Test_servomoteur
 //#define Test_PCF8574
-#define Projet_la_camera_connectee
+
 
 
 
@@ -30,43 +30,44 @@ void setup() {
   init_PCA9685();
   init_Camera();
   Allumage_LED();
-  init_Position();
+ init_position_axe_x();
+ init_position_axe_y();
 }
 /*****************************************Boucle**************************************/
 void loop() {
 
-#ifdef Projet_La_camera_connectee
+
   uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4  capteur infrarouge droite
   uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5  capteur infrarouge gauche
   if (CapteurD == 1) {
     Serial.println("HUMAIN a droite");
-    for (int angle = angle_actuel; angle >= 33; angle--) {
-      faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur
+    for (int angle = 90; angle >= 33; angle--) {
+      faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur du bas axe x
       delay(80);
     }
     angle_actuel = 33;
   }
   if (CapteurG == 1) {
     Serial.println("HUMAIN a gauche");
-    for (int angle = angle_actuel; angle <= 123; angle++) {
-      faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur
+    for (int angle = 90; angle <= 123; angle++) {
+      faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur du bas axe x
       delay(80);
     }
     angle_actuel = 123;
   }
-#endif
+ 
 
-#ifdef Test_PCF8574
-  uint8_t etat = pcf8575.digitalRead(P1); 
+ #ifdef Test_PCF8574
+  uint8_t etat = pcf8575.digitalRead(P1);
   if (etat == 1) {
     Serial.println(etat);
     delay(1000);
   } else if (etat == 0) {
     Serial.println(etat);
   }
-#endif
+ #endif
 
-#ifdef Test_servomoteur
+ #ifdef Test_servomoteur
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('\n');
     int angle = input.toInt();                                  // Angle saisi depuis le moniteur série
@@ -76,5 +77,5 @@ void loop() {
     Serial.print("Position du servo mise à jour : ");
     Serial.println(angle);
   }
-#endif
+ #endif
 }

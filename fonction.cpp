@@ -63,15 +63,17 @@ void Allumage_LED(void) {
   faboPWM.set_channel_value(3, 4095);  // infra.led  U13
   faboPWM.set_channel_value(4, 4095);  // infra.led  U15
 }
-void init_Position(void) {
+void init_position_axe_y(void) {
   int angle = 0;
   int pulseWidth = calcul_signal(angle);
   faboPWM.set_channel_value(0, pulseWidth);  // servomoteur axe Y(haut/bas)
+  
+}
+void init_position_axe_x(void){  
   int ServoX = 90;
   int PWM = calcul_signal(ServoX);
   faboPWM.set_channel_value(1, PWM);  //servomoteur axe X (gauche/droite)
 
-  faboPWM.set_channel_value(1, calcul_signal(90));
 }
 
 void init_Camera(void) {
@@ -167,7 +169,7 @@ void init_Camera(void) {
 
   startCameraServer();                            // serveur de la caméra
 
-  Serial.print("Caméra prêt! Ustiliser 'http://");  
+  Serial.print("Caméra prêt! Utiliser 'http://");  
   Serial.print(WiFi.localIP());
   Serial.println("' pour se connecter");
 }
