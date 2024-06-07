@@ -13,12 +13,9 @@ unsigned long timeElapsed;
 int angle_actuel = 90;
 int pulseWidth;
 
-""
+#define Projet
 //#define Test_servomoteur
 //#define Test_PCF8574
-
-
-
 
 /*****************************************Intialisation***********************************/
 void setup() {
@@ -35,7 +32,8 @@ void setup() {
 }
 /*****************************************Boucle**************************************/
 void loop() {
-#ifdef projet
+
+#ifdef Projet
   uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4 capteur infrarouge droite
   uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5 capteur infrarouge gauche
 
@@ -88,8 +86,3 @@ void loop() {
 
 }
 
- : ");
-      Serial.println(angle);
-    }
-#endif
-  }
