@@ -63,15 +63,16 @@ void Allumage_LED(void) {
   faboPWM.set_channel_value(3, 4095);  // infra.led  U13
   faboPWM.set_channel_value(4, 4095);  // infra.led  U15
 }
-void init_position_axe_y(void) {
-  int angle = 0;
-  int pulseWidth = calcul_signal(angle);
-  faboPWM.set_channel_value(0, pulseWidth);  // servomoteur axe Y(haut/bas)
-  
+
+void init_position_axe_y() {
+  int angle_servo_axe_y = 0;
+  int PWM = calcul_signal(angle_servo_axe_y);
+  faboPWM.set_channel_value(0, PWM);  // servomoteur axe Y(haut/bas) 
 }
+
 void init_position_axe_x(void){  
-  int ServoX = 90;
-  int PWM = calcul_signal(ServoX);
+  int angle_servo_axe_x = 90;
+  int PWM = calcul_signal(angle_servo_axe_x);
   faboPWM.set_channel_value(1, PWM);  //servomoteur axe X (gauche/droite)
 
 }
