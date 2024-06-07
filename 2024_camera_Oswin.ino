@@ -13,7 +13,7 @@ unsigned long timeElapsed;
 int angle_actuel = 90;
 int pulseWidth;
 
-
+""
 //#define Test_servomoteur
 //#define Test_PCF8574
 
@@ -35,7 +35,7 @@ void setup() {
 }
 /*****************************************Boucle**************************************/
 void loop() {
-
+#ifdef projet
   uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4 capteur infrarouge droite
   uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5 capteur infrarouge gauche
 
@@ -62,6 +62,7 @@ void loop() {
       delay(1000);
     }
   }
+#endif
 
 #ifdef Test_PCF8574
   uint8_t etat = pcf8575.digitalRead(P1);
@@ -76,15 +77,18 @@ void loop() {
 #ifdef Test_servomoteur
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('\n');
-    int angle = input.toInt();                                  // Angle saisi depuis le moniteur série
-    angle = constrain(angle, 0, 180);                           // Limiter l'angle entre 0 et 180 degrés
-    int pulseWidth = calcul_signal(angle);                      // Utiliser la fonction calcul_signal pour convertir l'angle en largeur d'impulsion
+    int angle = input.toInt();              // Angle saisi depuis le moniteur série
+    angle = constrain(angle, 0, 180);       // Limiter l'angle entre 0 et 180 degrés
+    int pulseWidth = calcul_signal(angle);  // Utiliser la fonction calcul_signal pour convertir l'angle en largeur d'impulsion
     faboPWM.set_channel_value(0, pulseWidth);
     Serial.print("Position du servo mise à jour : ");
     Serial.println(angle);
   }
 #endif
-} : ");
+
+}
+
+ : ");
       Serial.println(angle);
     }
 #endif
