@@ -58,7 +58,7 @@ void IRAM_ATTR onTimer(void* param) {
   static int cpt = 0;
 }
 
-void Allumage_LED(void) {
+void allumage_LED(void) {
   faboPWM.set_channel_value(2, 1500);  // led U11
   faboPWM.set_channel_value(3, 4095);  // infra.led  U13
   faboPWM.set_channel_value(4, 4095);  // infra.led  U15

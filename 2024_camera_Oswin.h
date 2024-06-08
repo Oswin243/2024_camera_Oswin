@@ -22,13 +22,13 @@ extern const char* ssid;
 extern const char* password;
 
 
-#define M_WIFI
+#define Chambre
 
 extern PCF8575 pcf8575;
 extern FaBoPWM faboPWM;
 
 void init_Position(void);
-void Allumage_LED(void);
+void allumage_LED(void);
 void init_Camera(void);
 void init_PCA9685(void);
 void init_PCF8575(void);
