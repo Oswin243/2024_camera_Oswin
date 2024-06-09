@@ -13,9 +13,10 @@ unsigned long timeElapsed;
 int angle_actuel = 90;
 int pulseWidth;
 
+#define Projet
 //#define Test_servomoteur
 //#define Test_PCF8574
-
+  
 /*****************************************Intialisation***********************************/
 void setup() {
   Wire.begin();
@@ -30,15 +31,17 @@ void setup() {
   init_position_axe_y();
 }
 /*****************************************Boucle**************************************/
+
 void loop() {
 
+ #ifdef Projet
   uint8_t CapteurD = pcf8575.digitalRead(P0);  // P0=U4 capteur infrarouge droite
   uint8_t CapteurG = pcf8575.digitalRead(P1);  // P1=U5 capteur infrarouge gauche
 
   if (CapteurD == 1) {
     if (angle_actuel != 33) {
       Serial.println("HUMAIN à droite");
-      for (int angle = angle_actuel; angle >= 33; angle-10) {
+      for (int angle = angle_actuel; angle >= 33; angle--) {
         faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur du bas axe x
         delay(80);
       }
@@ -49,15 +52,16 @@ void loop() {
   if (CapteurG == 1) {
     if (angle_actuel != 123) {
       Serial.println("HUMAIN à gauche");
-      for (int angle = angle_actuel; angle <= 123; angle+10) {
+      for (int angle = angle_actuel; angle <= 123; angle++) {
         faboPWM.set_channel_value(1, calcul_signal(angle));  // U9 servomoteur du bas axe x
         delay(80);
       }
       angle_actuel = 123;
     }
   }
+#endif
 
- #ifdef Test_PCF8574
+#ifdef Test_PCF8574
   uint8_t etat = pcf8575.digitalRead(P1);
   if (etat == 1) {
     Serial.println(etat);
@@ -65,9 +69,9 @@ void loop() {
   } else if (etat == 0) {
     Serial.println(etat);
   }
- #endif
+#endif
 
- #ifdef Test_servomoteur
+#ifdef Test_servomoteur
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('\n');
     int angle = input.toInt();              // Angle saisi depuis le moniteur série
@@ -77,5 +81,6 @@ void loop() {
     Serial.print("Position du servo mise à jour : ");
     Serial.println(angle);
   }
- #endif
+#endif
 }
+
