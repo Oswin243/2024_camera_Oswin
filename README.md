@@ -1,15 +1,11 @@
 
 # 2024_camera_Oswin
-
-## Table de matie des matières
-### Vidéo 
+## Vidéo 
 
 https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/0ddc3cbc-4c59-40dc-9dcf-1f61af386e99
 
-
-
-
-![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/ee703e5f-3518-406a-b32f-7055061311c4) [lien EasyEDA](https://oshwlab.com/oswin03/sch-ma-cam-ra) 
+### Table de matie des matières
+![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/ee703e5f-3518-406a-b32f-7055061311c4) [lien fabricaton PCB](https://oshwlab.com/oswin03/sch-ma-cam-ra) 
 
 - [Introduction](#Introduction)
 - [Le schéma bloc](#Le-schéma-bloc) 
@@ -100,8 +96,8 @@ M5stack timer-caméra/ Transistor BS170 /Servomoteur MG996r/ PCF8574/ PCA9685
 
 ## Bibliothèques nécessaires 
 
-Bibliothèques nécessaires pour intégrer les cartes : 
-https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json ,   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json 
+Bibliothèques nécessaires pour intégrer les microcontrôleurs ESP32 : 
+https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json                                                                               https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json 
 
 ## Partie mécanique
 
