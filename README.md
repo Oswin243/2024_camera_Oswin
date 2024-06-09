@@ -4,7 +4,9 @@
 ## Table de matie des matières
 ### Vidéo 
 
-https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/e07136aa-cdf2-48c0-993d-b408051f5768
+https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/0ddc3cbc-4c59-40dc-9dcf-1f61af386e99
+
+
 
 
 ![image](https://github.com/Oswin243/2024_camera_Oswin/assets/166718391/ee703e5f-3518-406a-b32f-7055061311c4) [lien EasyEDA](https://oshwlab.com/oswin03/sch-ma-cam-ra) 
