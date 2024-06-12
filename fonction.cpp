@@ -67,13 +67,13 @@ void allumage_LED(void) {
 void init_position_axe_y() {
   int angle_servo_axe_y = 0;
   int PWM = calcul_signal(angle_servo_axe_y);
-  faboPWM.set_channel_value(0, PWM);  // servomoteur axe Y(haut/bas) 
+  faboPWM.set_channel_value(0, PWM);   // servomoteur axe Y(haut/bas) 
 }
 
 void init_position_axe_x(void){  
   int angle_servo_axe_x = 90;
   int PWM = calcul_signal(angle_servo_axe_x);
-  faboPWM.set_channel_value(1, PWM);  //servomoteur axe X (gauche/droite)
+  faboPWM.set_channel_value(1, PWM);   //servomoteur axe X (gauche/droite)
 
 }
 
