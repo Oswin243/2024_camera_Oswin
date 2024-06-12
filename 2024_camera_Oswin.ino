@@ -7,15 +7,16 @@
 *****************************************librairies**************************************/
 #include "2024_camera_Oswin.h"
 
+#define Projet
+//#define Test_servomoteur
+//#define Test_PCF8574
 /*****************************************Variable**************************************/
 esp_timer_handle_t timer;
 unsigned long timeElapsed;
 int angle_actuel = 90;
 int pulseWidth;
 
-#define Projet
-//#define Test_servomoteur
-//#define Test_PCF8574
+
   
 /*****************************************Intialisation***********************************/
 void setup() {
