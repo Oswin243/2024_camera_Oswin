@@ -21,7 +21,7 @@ int pulseWidth;
 /*****************************************Intialisation***********************************/
 void setup() {
   Wire.begin();
-  Serial.begin(115200);
+  Serial.begin(115200);                          // vitesse de bit par seconde 
   Serial.setDebugOutput(true);
   Serial.println();
   init_PCF8575();
